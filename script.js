@@ -14,47 +14,51 @@
 
 window.addEventListener("load", function () {
    let form = document.querySelector("form");
+   let pilotName = document.querySelector("input[name=pilotName]");
+   let copilotName = document.querySelector("input[name=copilotName]");
+   let fuelLevel = document.querySelector("input[name=fuelLevel]");
+   let cargoMass = document.querySelector("input[name=cargoMass]");
+   
    form.addEventListener("submit", function (event) {
       event.preventDefault();
       event.stopPropagation();
 
-      let pilotName = document.querySelector("input[name=pilotName]");
-      let copilotName = document.querySelector("input[name=copilotName]");
-      let fuelLevel = document.querySelector("input[name=fuelLevel]");
-      let cargoMass = document.querySelector("input[name=cargoMass]");
-
       if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === "") {
-         alert("All Fields Are Required!")
+         alert("All Fields Are Required!");
+         event.preventDefault();
+         event.stopPropagation();
+      } else if (!(isNaN(pilotName.value))) {
+         alert("Pilot Name Must Be A String!");
+         event.preventDefault();
+         event.stopPropagation();
+      } else if (!(isNaN(copilotName.value))) {
+         alert("Co-Pilot Name Must Be A String!");
+         event.preventDefault();
+         event.stopPropagation();
+      }else if ((isNaN(fuelLevel.value))) {
+         alert("Fuel Level Must Be A Number!");
+         event.preventDefault();
+         event.stopPropagation();
+      } else if ((isNaN(cargoMass.value))) {
+         alert("Cargo MAss Must Be A Number!");      
+         event.preventDefault();
+         event.stopPropagation();
       } else {
          launchStatusCheck(pilotName.value, copilotName.value, fuelLevel.value, cargoMass.value);
-      }
-      if (!(isNaN(pilotName.value))) {
-         alert("Pilot Name Must Be A String!")
-      }
-
-      if (!(isNaN(copilotName.value))) {
-         alert("Co-Pilot Name Must Be A String!")
-      }
-
-      if ((isNaN(fuelLevel.value))) {
-         alert("Fuel Level Must Be A Number!")
-      }
-
-      if ((isNaN(cargoMass.value))) {
-         alert("Cargo MAss Must Be A Number!")
+         event.preventDefault();
+         event.stopPropagation();
       }
 
       console.log(event)
    })
 
+   let launchStatus = document.querySelector("#launchStatus");
+   let faultyItems = document.querySelector("#faultyItems");
+   let pilotStatus = document.querySelector("#pilotStatus");
+   let copilotStatus = document.querySelector("#copilotStatus")
+   let fuelStatus = document.querySelector("#fuelStatus");
+   let cargoStatus = document.querySelector("#cargoStatus")
    function launchStatusCheck(pilotNamer, copilotNamer, fuelLevelr, cargoMassr) {
-      let launchStatus = document.querySelector("#launchStatus");
-      let faultyItems = document.querySelector("#faultyItems");
-      let pilotStatus = document.querySelector("#pilotStatus");
-      let copilotStatus = document.querySelector("#copilotStatus")
-      let fuelStatus = document.querySelector("#fuelStatus");
-      let cargoStatus = document.querySelector("#cargoStatus")
-
       pilotStatus.innerHTML = `Pilot ${pilotNamer} is Ready!`;
       copilotStatus.innerHTML = `Co-Pilot ${copilotNamer} is Ready!`;
       fuelStatus.innerHTML = (fuelLevelr > 10000) ? "Fuel Level High Enough For Launch!" : "Fuel Level Not High Enough For Launch!";
